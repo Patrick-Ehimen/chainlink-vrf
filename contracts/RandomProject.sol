@@ -1,13 +1,37 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.0;
+import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
+import "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 
-//import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
+contract Randomness is VRFConsumerBaseV2, ConfirmedOwner {
+    event RequestSent(uint256 requestId, uint32 numWords);
+    event RequestFulfilled(uint256 requestId, uint256[] randomWords);
 
-contract Randomness {
+    struct RequestStatus {
+        bool fulfilled; // whether the request has been successfully fulfilled
+        bool exists; // whether a requestId exists
+        uint256[] randomWords;
+    }
+    mapping(uint256 => RequestStatus)
+        public s_requests; /* requestId --> requestStatus */
+    VRFCoordinatorV2Interface COORDINATOR;
+
     bytes32 internal keyHash;
+    uint256 internal fee;
+    uint256 public randomResult;
 
     string[] public groupOfProjects;
+
+    // Your subscription ID.
+    uint64 s_subscriptionId;
+
+    // past requests Id.
+    uint256[] public requestIds;
+    uint256 public lastRequestId;
+
+    constructor() public {}
 
     function addProject(string memory _project) public {
         groupOfProjects.push(_project);
@@ -30,5 +54,4 @@ contract Randomness {
         }
         return 1000;
     }
-    //return projects[_project]
 }
