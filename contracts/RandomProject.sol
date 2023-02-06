@@ -29,4 +29,22 @@ contract Randomn {
         }
         return 1000;
     }
+
+    function random(uint _random) public view returns (uint) {
+        return
+            uint(
+                keccak256(
+                    abi.encodePacked(
+                        block.difficulty,
+                        block.timestamp,
+                        msg.sender
+                    )
+                )
+            ) % _random;
+    }
+
+    function getRandomProject() public view returns (string memory) {
+        uint _random = random(groupOfProjects.length);
+        return groupOfProjects[_random];
+    }
 }
