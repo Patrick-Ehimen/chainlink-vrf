@@ -1,13 +1,11 @@
-# Sample Hardhat Project
+# Randomn
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+Randomn is a smart contract that allows users to add projects to a group, and then randomly select one of the projects from the group.
 
-Try running some of the following tasks:
+## Features
 
-```shell
-npx hardhat help
-npx hardhat test
-GAS_REPORT=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
-```
+- Add projects to a group
+- Get the list of projects in the group
+- Get the index of a project in the group
+- Generate random numbers
+- Get a random project from the group
